@@ -1,5 +1,5 @@
 class Post
-  attr_reader :format, :bundles
+  attr_reader :format, :bundles, :quantity
 
   FORMATS = {
     flac: "FLAC",
@@ -23,16 +23,16 @@ class Post
     }.freeze,
   }.freeze
 
-  def initialize(format:)
+  def initialize(format:, quantity:)
     validate_format!(format: format)
+    validate_quantity!(quantity: quantity)
 
     @format = FORMATS[format]
+    @quantity = quantity
     @bundles = FORMAT_BUNDLES[format]
   end
 
-  def get_minimum_bundles(quantity:)
-    validate_quantity!(quantity: quantity)
-
+  def get_minimum_bundles
     remaining = quantity
     bundles.sort.reverse.map { |bundle|
       hcf, remainder = highest_common_factor(remaining, bundle[0])
@@ -49,8 +49,8 @@ class Post
   end
 
   def validate_quantity!(quantity:)
-    unless quantity >= 0
-      raise ArgumentError.new("#{quantity} is not a valid quantity!")
+    unless ((quantity.to_i == quantity) && (quantity.to_i > 0))
+      raise ArgumentError.new("#{quantity} is not an integer greater than 0!")
     end
   end
 
