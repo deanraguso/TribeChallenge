@@ -30,13 +30,19 @@ class Post
     @bundles = FORMAT_BUNDLES[format].sort.reverse
   end
 
-  def get_minimum_bundles(post_quantity)
-    # bundles.sort.reverse
+  def get_minimum_bundles(quantity:)
+    validate_quantity!(quantity: quantity)
   end
 
   private
 
   def validate_format!(format:)
     raise ArgumentError.new("#{format} is not a supported format!") unless FORMATS.include?(format)
+  end
+
+  def validate_quantity!(quantity:)
+    unless quantity >= 0
+      raise ArgumentError.new("#{quantity} is not a valid quantity!")
+    end
   end
 end
