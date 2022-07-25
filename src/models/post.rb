@@ -6,7 +6,7 @@ class Post
     img: "IMG",
     vid: "VID",
   }.freeze
-  BUNDLES = {
+  FORMAT_BUNDLES = {
     flac: {
       3 => 427.50,
       6 => 810,
@@ -27,13 +27,11 @@ class Post
     validate_format!(format: format)
 
     @format = FORMATS[format]
-    @bundles = BUNDLES[format]
+    @bundles = FORMAT_BUNDLES[format].sort.reverse
   end
 
   def get_minimum_bundles(post_quantity)
-    {
-      1 => 500,
-    }
+    # bundles.sort.reverse
   end
 
   private

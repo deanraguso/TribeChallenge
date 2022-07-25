@@ -17,10 +17,10 @@ This application calculates the total price for the posts required, and presents
 
 Example Case:
 ```rb
-//  Input
+#  Input
 10 IMG 15 FLAC 13 VID
 
-//  Output
+#  Output
 10 IMG $800
     1 X 10 $800
 15 FLAC $1957.50

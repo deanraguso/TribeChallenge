@@ -6,7 +6,7 @@ RSpec.describe ::Post, type: :class do
   end
 
   it "has all bundles available for reading" do
-    expect(described_class::BUNDLES.length).to eq(3)
+    expect(described_class::FORMAT_BUNDLES.length).to eq(3)
   end
 
   context "with NO valid format argument" do
@@ -22,6 +22,10 @@ RSpec.describe ::Post, type: :class do
   context "with a valid format argument" do
     it "creates successfully" do
       expect(described_class.new(format: :img).format).to eq("IMG")
+    end
+
+    it 'contains bundles sorted by descending quantity' do
+      expect(described_class.new(format: :flac).bundles).to eq(described_class::FORMAT_BUNDLES[:flac].sort.reverse)
     end
   end
 end
