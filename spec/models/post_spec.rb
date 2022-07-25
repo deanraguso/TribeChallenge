@@ -20,10 +20,6 @@ RSpec.describe ::Post, type: :class do
     it "creates successfully" do
       expect(described_class.new(format: :img).format).to eq("IMG")
     end
-
-    it "contains bundles sorted by descending quantity" do
-      expect(described_class.new(format: :flac).bundles).to eq(described_class::FORMAT_BUNDLES[:flac].sort.reverse)
-    end
   end
 
   describe "#get_minimum_bundles" do
@@ -37,8 +33,28 @@ RSpec.describe ::Post, type: :class do
       end
     end
 
-    context 'with a valid quantity' do
-      
+    context "with a valid quantity" do
+      let(:quantity) { 15 }
+
+      context "when the quantity is smaller than the smallest bundle" do
+        let(:quantity) { 2 }
+
+        it "returns no bundle combination" do
+          expect(subject).to eq({})
+        end
+      end
+
+      context "when the quantity doesn't fit into an integer combination of bundles" do
+        let(:quantity) { 19 }
+
+        it "returns the bundle combination that achieves the largest quantity" do
+          expect(subject).to eq({ 9 => 2 })
+        end
+      end
+
+      it "returns a hash of the minimum number of bundles to meet the quantity" do
+        expect(subject).to eq({ 9 => 1, 6 => 1 })
+      end
     end
   end
 end

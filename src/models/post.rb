@@ -11,27 +11,35 @@ class Post
       3 => 427.50,
       6 => 810,
       9 => 1147.50,
-    },
+    }.freeze,
     img: {
       5 => 450,
       10 => 800,
-    },
+    }.freeze,
     vid: {
       3 => 570,
       5 => 900,
       9 => 1530,
-    },
+    }.freeze,
   }.freeze
 
   def initialize(format:)
     validate_format!(format: format)
 
     @format = FORMATS[format]
-    @bundles = FORMAT_BUNDLES[format].sort.reverse
+    @bundles = FORMAT_BUNDLES[format]
   end
 
   def get_minimum_bundles(quantity:)
     validate_quantity!(quantity: quantity)
+
+    remaining = quantity
+    bundles.sort.reverse.map { |bundle|
+      [hcf, remainder] = highest_common_factor(remaining, bundle[0])
+      remaining = remainder
+
+      [bundle[0], hcf]
+    }.to_h.delete_if { |k, v| v == 0 }
   end
 
   private
@@ -44,5 +52,12 @@ class Post
     unless quantity >= 0
       raise ArgumentError.new("#{quantity} is not a valid quantity!")
     end
+  end
+
+  def highest_common_factor(quantity, divisor)
+    hcf = (remaining / bundle[0]).to_i
+    remainder = quantity - bundle[0] * hcf
+
+    [hcf, remainder]
   end
 end
