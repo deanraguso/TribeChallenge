@@ -10,8 +10,10 @@ This application calculates the total price for the posts required, and presents
 
 - Clients will input their order in a space separated string, with the format "quantity product".
 - The input order can chain on indefinitely.
-- The product order will be organised to require the minimum number of packages for each format.
 - The submission format catalogue is static.
+- The product order will be organised to require the minimum number of packages for each format.
+- *Only an integer number of each bundle can be bought*
+  - If less than the quantity of the smallest bundle is requested, the order quantity will round up to the nearest minimum bundle quantity.
 
 Example Case:
 ```rb
