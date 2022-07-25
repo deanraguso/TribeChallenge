@@ -19,7 +19,7 @@ Example Case:
 10 IMG 15 FLAC 13 VID
 
 //  Output
-10 IMG $80
+10 IMG $800
     1 X 10 $800
 15 FLAC $1957.50
     1 X 9 $1147.50
