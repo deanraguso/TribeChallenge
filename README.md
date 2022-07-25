@@ -12,7 +12,7 @@ This application calculates the total price for the posts required, and presents
 - The input order can chain on indefinitely.
 - The submission format catalogue is static.
 - The product order will be organised to require the minimum number of packages for each format.
-- *Only an integer number of each bundle can be bought*
+- **Only an integer number of each bundle can be bought**
   - If less than the quantity of the smallest bundle is requested, the order quantity will round up to the nearest minimum bundle quantity.
 
 Example Case:
