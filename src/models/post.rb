@@ -35,7 +35,7 @@ class Post
 
     remaining = quantity
     bundles.sort.reverse.map { |bundle|
-      [hcf, remainder] = highest_common_factor(remaining, bundle[0])
+      hcf, remainder = highest_common_factor(remaining, bundle[0])
       remaining = remainder
 
       [bundle[0], hcf]
@@ -55,8 +55,8 @@ class Post
   end
 
   def highest_common_factor(quantity, divisor)
-    hcf = (remaining / bundle[0]).to_i
-    remainder = quantity - bundle[0] * hcf
+    hcf = (quantity / divisor).to_i
+    remainder = quantity - (divisor * hcf)
 
     [hcf, remainder]
   end
