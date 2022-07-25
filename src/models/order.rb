@@ -10,7 +10,7 @@ class Order
   end
 
   def print_cost_breakdown
-    @posts.each
+    @posts.map(&:print_cost_breakdown)
   end
 
   private

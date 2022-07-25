@@ -30,4 +30,12 @@ RSpec.describe ::Order, type: :class do
       expect(described_class.new(input: "5 FLAC 3 VID 19 IMG").posts.length).to eq(3)
     end
   end
+
+  describe '#print_cost_breakdown' do
+    subject { described_class.new(input: "15 FLAC 30 VID 9 IMG").print_cost_breakdown }
+
+    it "prints a receipt of the cost breakdown for the order" do
+      expect { subject }.to output("9 IMG $450\n\t1 X 5 $450\n30 VID $5160\n\t3 X 9 $4590\n\t1 X 3 $570\n15 FLAC $1957.5\n\t1 X 9 $1147.5\n\t1 X 6 $810\n").to_stdout
+    end
+  end
 end

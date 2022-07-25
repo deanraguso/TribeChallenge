@@ -68,7 +68,7 @@ RSpec.describe ::Post, type: :class do
   describe '#print_cost_breakdown' do
     subject { described_class.new(format: "FLAC", quantity: 15).print_cost_breakdown }
 
-    it "returns a hash mapping the minimum bundles to a dollar amount" do
+    it "prints a receipt of the cost breakdown for the post" do
       expect { subject }.to output("15 FLAC $1957.5\n\t1 X 9 $1147.5\n\t1 X 6 $810\n").to_stdout
     end
   end
