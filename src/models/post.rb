@@ -28,6 +28,14 @@ class Post
     @bundles = FORMAT_BUNDLES[format]
   end
 
+  def get_cost_breakdown
+    get_minimum_bundles.map { |bundle|
+      bundle_size, quantity = bundle
+
+      [bundle_size, quantity * @bundles[bundle_size]]
+    }.to_h
+  end
+
   def get_minimum_bundles
     remaining = quantity
     bundles.sort.reverse.map { |bundle|
@@ -45,7 +53,7 @@ class Post
   end
 
   def validate_quantity!(quantity:)
-    unless ((quantity.to_i == quantity) && (quantity.to_i > 0))
+    unless ((quantity.to_s.to_i == quantity) && (quantity.to_i > 0))
       raise ArgumentError.new("#{quantity} is not an integer greater than 0!")
     end
   end

@@ -26,34 +26,42 @@ RSpec.describe ::Post, type: :class do
   context "with a valid format argument" do
     it "creates successfully" do
       expect(described_class.new(format: "IMG", quantity: 2).format).to eq("IMG")
+      expect(described_class.new(format: "FLAC", quantity: 2).format).to eq("FLAC")
+      expect(described_class.new(format: "VID", quantity: 2).format).to eq("VID")
     end
   end
 
   describe "#get_minimum_bundles" do
     subject { described_class.new(format: "FLAC", quantity: quantity).get_minimum_bundles }
 
-    context "with a valid quantity" do
-      let(:quantity) { 15 }
+    let(:quantity) { 15 }
 
-      context "when the quantity is smaller than the smallest bundle" do
-        let(:quantity) { 2 }
+    context "when the quantity is smaller than the smallest bundle" do
+      let(:quantity) { 2 }
 
-        it "returns no bundle combination" do
-          expect(subject).to eq({})
-        end
+      it "returns no bundle combination" do
+        expect(subject).to eq({})
       end
+    end
 
-      context "when the quantity doesn't fit into an integer combination of bundles" do
-        let(:quantity) { 19 }
+    context "when the quantity doesn't fit into an integer combination of bundles" do
+      let(:quantity) { 19 }
 
-        it "returns the bundle combination that achieves the largest quantity" do
-          expect(subject).to eq({ 9 => 2 })
-        end
+      it "returns the bundle combination that achieves the largest quantity" do
+        expect(subject).to eq({ 9 => 2 })
       end
+    end
 
-      it "returns a hash of the minimum number of bundles to meet the quantity" do
-        expect(subject).to eq({ 9 => 1, 6 => 1 })
-      end
+    it "returns a hash of the minimum number of bundles to meet the quantity" do
+      expect(subject).to eq({ 9 => 1, 6 => 1 })
+    end
+  end
+
+  describe "#get_cost_breakdown" do
+    subject { described_class.new(format: "FLAC", quantity: 15).get_cost_breakdown }
+
+    it "returns a hash mapping the minimum bundles to a dollar amount" do
+      expect(subject).to eq({ 9 => Post::FORMAT_BUNDLES["FLAC"][9] * 1, 6 => Post::FORMAT_BUNDLES["FLAC"][6] * 1 })
     end
   end
 end

@@ -26,7 +26,7 @@ class Order
     while (post_order = input_array.slice!(-2, 2))
       validate_post_order!(quantity: post_order[0], format: post_order[1].upcase)
 
-      posts << Post.new(quantity: post_order[0], format: post_order[1].upcase)
+      posts << Post.new(quantity: post_order[0].to_i, format: post_order[1].upcase)
     end
 
     posts
