@@ -64,4 +64,12 @@ RSpec.describe ::Post, type: :class do
       expect(subject).to eq({ 9 => Post::FORMAT_BUNDLES["FLAC"][9] * 1, 6 => Post::FORMAT_BUNDLES["FLAC"][6] * 1 })
     end
   end
+
+  describe '#print_cost_breakdown' do
+    subject { described_class.new(format: "FLAC", quantity: 15).print_cost_breakdown }
+
+    it "returns a hash mapping the minimum bundles to a dollar amount" do
+      expect { subject }.to output("15 FLAC $1957.5\n\t1 X 9 $1147.5\n\t1 X 6 $810\n").to_stdout
+    end
+  end
 end

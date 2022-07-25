@@ -25,5 +25,9 @@ RSpec.describe ::Order, type: :class do
   end
 
   context "with a valid input" do
+    it 'creates a list of valid posts' do
+      expect(described_class.new(input: "5 FLAC").posts.length).to eq(1)
+      expect(described_class.new(input: "5 FLAC 3 VID 19 IMG").posts.length).to eq(3)
+    end
   end
 end

@@ -1,5 +1,5 @@
 class Post
-  attr_reader :format, :bundles, :quantity
+  attr_reader :format, :bundles, :quantity, :get_cost_breakdown
 
   FORMATS = ["FLAC", "IMG", "VID"].freeze
   FORMAT_BUNDLES = {
@@ -26,6 +26,19 @@ class Post
     @format = format
     @quantity = quantity
     @bundles = FORMAT_BUNDLES[format]
+  end
+
+  def print_cost_breakdown
+    minimum_bundles = get_minimum_bundles
+    cost_breakdown = get_cost_breakdown
+    total_cost = get_total_cost(cost_breakdown: cost_breakdown)
+
+    puts "#{@quantity} #{@format} $#{total_cost}"
+    minimum_bundles.each { |bundle|
+      bundle_size, quantity = bundle
+
+      puts "\t#{quantity} X #{bundle_size} $#{cost_breakdown[bundle_size]}"
+    }
   end
 
   def get_cost_breakdown
@@ -63,5 +76,9 @@ class Post
     remainder = quantity - (divisor * hcf)
 
     [hcf, remainder]
+  end
+
+  def get_total_cost(cost_breakdown:)
+    cost_breakdown.reduce(0) { |total_cost, bundle| total_cost + bundle[1] }
   end
 end

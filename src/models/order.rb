@@ -9,6 +9,10 @@ class Order
     @posts = get_posts(input: input)
   end
 
+  def print_cost_breakdown
+    @posts.each
+  end
+
   private
 
   def validate_input!(input:)
