@@ -1,22 +1,18 @@
 class Post
   attr_reader :format, :bundles, :quantity
 
-  FORMATS = {
-    flac: "FLAC",
-    img: "IMG",
-    vid: "VID",
-  }.freeze
+  FORMATS = ["FLAC", "IMG", "VID"].freeze
   FORMAT_BUNDLES = {
-    flac: {
+    "FLAC" => {
       3 => 427.50,
       6 => 810,
       9 => 1147.50,
     }.freeze,
-    img: {
+    "IMG" => {
       5 => 450,
       10 => 800,
     }.freeze,
-    vid: {
+    "VID" => {
       3 => 570,
       5 => 900,
       9 => 1530,
@@ -27,7 +23,7 @@ class Post
     validate_format!(format: format)
     validate_quantity!(quantity: quantity)
 
-    @format = FORMATS[format]
+    @format = format
     @quantity = quantity
     @bundles = FORMAT_BUNDLES[format]
   end

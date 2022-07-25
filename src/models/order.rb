@@ -24,7 +24,9 @@ class Order
 
     input_array = input.split(" ")
     while (post_order = input_array.slice!(-2, 2))
-      validate_post_order!(quantity: post_order[0], format: post_order[1])
+      validate_post_order!(quantity: post_order[0], format: post_order[1].upcase)
+
+      posts << Post.new(quantity: post_order[0], format: post_order[1].upcase)
     end
 
     posts
@@ -35,8 +37,8 @@ class Order
       raise ArgumentError.new("#{quantity} is not an integer greater than 0!")
     end
 
-    unless Post::FORMATS.values.include?(format.to_sym)
-      raise ArgumentError.new("#{format} is not a valid format!")
+    unless Post::FORMATS.include?(format)
+      raise ArgumentError.new("#{format} is not a supported format!")
     end
   end
 end

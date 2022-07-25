@@ -10,27 +10,27 @@ RSpec.describe ::Post, type: :class do
   end
 
   context "with invalid params" do
-    context "with an invalid or missing format argument" do
+    context "when the format is invalid" do
       it "fails to be created" do
-        expect { described_class.new(format: :article, quantity: 2) }.to raise_error(ArgumentError, "article is not a supported format!")
+        expect { described_class.new(format: "ARTICLE", quantity: 2) }.to raise_error(ArgumentError, "ARTICLE is not a supported format!")
       end
     end
 
-    context "with an invalid quantity" do
+    context "when quantity is invalid" do
       it "fails to be created" do
-        expect { described_class.new(format: :flac, quantity: 27.5) }.to raise_error(ArgumentError, "27.5 is not an integer greater than 0!")
+        expect { described_class.new(format: "FLAC", quantity: 27.5) }.to raise_error(ArgumentError, "27.5 is not an integer greater than 0!")
       end
     end
   end
 
   context "with a valid format argument" do
     it "creates successfully" do
-      expect(described_class.new(format: :img, quantity: 2).format).to eq("IMG")
+      expect(described_class.new(format: "IMG", quantity: 2).format).to eq("IMG")
     end
   end
 
   describe "#get_minimum_bundles" do
-    subject { described_class.new(format: :flac, quantity: quantity).get_minimum_bundles }
+    subject { described_class.new(format: "FLAC", quantity: quantity).get_minimum_bundles }
 
     context "with a valid quantity" do
       let(:quantity) { 15 }
