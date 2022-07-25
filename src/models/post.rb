@@ -24,6 +24,8 @@ class Post
   }.freeze
 
   def initialize(format:)
+    validate_format!(format: format)
+
     @format = FORMATS[format]
     @bundles = BUNDLES[format]
   end
@@ -32,5 +34,11 @@ class Post
     {
       1 => 500,
     }
+  end
+
+  private
+
+  def validate_format!(format:)
+    raise ArgumentError.new("#{format} is not a supported format!") unless FORMATS.include?(format)
   end
 end
